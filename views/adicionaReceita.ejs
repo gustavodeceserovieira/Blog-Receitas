@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Receita - Receitas & Sabores</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #f97316, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-orange-50 to-red-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-lg border-b-4 border-orange-400">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <a href="/" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+                    <i class="fas fa-utensils text-4xl text-orange-500"></i>
+                    <div>
+                        <h1 class="text-3xl font-bold gradient-text">Receitas & Sabores</h1>
+                        <p class="text-gray-600">Compartilhe e descubra receitas incríveis</p>
+                    </div>
+                </a>
+                <a href="/" class="text-orange-600 hover:text-orange-700 font-semibold flex items-center space-x-2">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Voltar</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold gradient-text mb-2">Compartilhe sua Receita</h2>
+                <p class="text-gray-600">Ajude outros cozinheiros com suas criações deliciosas</p>
+            </div>
+            <div id="success-message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl mb-6 hidden">
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    <span>Receita adicionada com sucesso!</span>
+                </div>
+            </div>
+
+            <!-- Form -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="p-6 bg-gradient-to-r from-orange-500 to-red-500 text-white">
+                    <h3 class="text-2xl font-bold flex items-center">
+                        <i class="fas fa-plus-circle mr-3"></i>
+                        Nova Receita
+                    </h3>
+                    <p class="opacity-90 mt-1">Preencha os campos para compartilhar sua receita</p>
+                </div>
+                
+                <div class="p-6 space-y-6">
+                    <form id="recipe-form">
+                        <!-- Basic Info -->
+                        <div class="grid md:grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    <i class="fas fa-utensils text-orange-500 mr-1"></i>
+                                    Título da Receita *
+                                </label>
+                                <input
+                                    type="text"
+                                    name="title"
+                                    placeholder="Ex: Brigadeiro Gourmet"
+                                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none transition-colors"
+                                    required
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    <i class="fas fa-user text-orange-500 mr-1"></i>
+                                    Seu Nome *
+                                </label>
+                                <input
+                                    type="text"
+                                    name="author"
+                                    placeholder="Ex: Maria Silva"
+                                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none transition-colors"
+                                    required
+                                >
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                <i class="fas fa-align-left text-orange-500 mr-1"></i>
+                                Descrição / Instruções*
+                            </label>
+                            <textarea
+                                name="description"
+                                placeholder="Descreva ou dê instruções sobre a sua receita..."
+                                class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none h-24 transition-colors"
+                                required
+                            ></textarea>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    <i class="fas fa-tags text-orange-500 mr-1"></i>
+                                    Categoria
+                                </label>
+                                <select
+                                    name="category"
+                                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none bg-white transition-colors"
+                                >
+                                    <option value="Doces" selected>Doces</option>
+                                    <option value="Salgados">Salgados</option>
+                                    <option value="Bebidas">Bebidas</option>
+                                    <option value="Massas">Massas</option>
+                                    <option value="Carnes">Carnes</option>
+                                </select>
+                            </div>
+                        <!-- Ingredients -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                <i class="fas fa-list-ul text-orange-500 mr-1"></i>
+                                Ingredientes *
+                            </label>
+                            <div id="ingredients-container" class="space-y-2">
+                                <input type="text" name="ingredients" placeholder="Ex: 1 xícara de farinha de trigo" class="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none transition-colors"
+                                    required >
+                            </div>
+                            <button
+                                type="button"
+                                onclick="addIngredient()"
+                                class="mt-2 text-orange-600 hover:text-orange-700 font-semibold flex items-center space-x-1 transition-colors"
+                            >
+                                <i class="fas fa-plus"></i>
+                                <span>Adicionar ingrediente</span>
+                            </button>
+                        <!-- Submit Button -->
+                        <div class="flex items-center justify-center pt-4">
+                            <button
+                                type="submit"
+                                class="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg transition-all duration-300 hover:scale-105 flex items-center space-x-2"
+                            >
+                                <i class="fas fa-paper-plane"></i>
+                                <span>Publicar Receita</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex items-center justify-center space-x-2 mb-4">
+                <i class="fas fa-utensils text-2xl text-orange-500"></i>
+                <h3 class="text-xl font-bold">Receitas & Sabores</h3>
+            </div>
+            <p class="text-gray-400">Compartilhando sabores e criando memórias</p>
+            <p class="text-sm text-gray-500 mt-4">&copy; 2024 Receitas & Sabores. Feito com ❤️</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add new ingredient field
+        function addIngredient() {
+            let ingredientes = []
+            const container = document.getElementById('ingredients-container');
+            const newInput = document.createElement('input');
+            newInput.type = 'text';
+            newInput.name = 'ingredients';
+            newInput.placeholder = 'Ingrediente adicional';
+            newInput.className = 'w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none transition-colors';
+            container.appendChild(newInput);
+            ingredientes.push(newInput.value)
+        }
+        // Handle form submission
+        document.getElementById('recipe-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show success message
+            const successMessage = document.getElementById('success-message');
+            successMessage.classList.remove('hidden');
+            
+            // Scroll to top to show message
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                successMessage.classList.add('hidden');
+            }, 5000);
+            
+            // Optional: Reset form or redirect
+            // this.reset();
+        });
+    </script>
+</body>
+</html>
