@@ -1,5 +1,5 @@
 import modelReceita from "../models/receita.js"
-
+import modelComentarios from "../models/comentario.js"
 
 
 export default async function salvaReceita(req,res){
@@ -9,11 +9,12 @@ export default async function salvaReceita(req,res){
         instrucoes:req.body.instrucoes,
         autor:req.body.autor,
         categoria:req.body.categoria,
-        dataCriacao:new Date(req.body.dataCriacao),
+        dataCriacao:new Date(),
         comentarios:req.body.comentarios
         });
+
         await receita.save()
-    return res.status(201).json({mensagem:"Receita salva com sucesso"})
+    return res.redirect("/")
 }
 
 export async function retornaReceitas(req,res) {
@@ -22,7 +23,9 @@ export async function retornaReceitas(req,res) {
 
 export async function RetornaReceitasID(req,res) {
     const receita = await modelReceita.findById(req.params.id)
-    return res.render('detalhes',{data:[receita]})
+    const comentarios = await modelComentarios.find({receita :req.params.id})
+    const id = receita['id']
+    return res.render('detalhes',{data:[receita],data1:comentarios,id})
 }
 
 export async function formAdicionaReceita(req,res) {

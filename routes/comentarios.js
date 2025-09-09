@@ -3,7 +3,7 @@ import salvaComentarios, { retornaComentarios } from '../controllers/comentarios
 
 const router = express.Router()
 
-router.put("/salvaComentarios",salvaComentarios)
+router.post("/salvaComentarios/:id",salvaComentarios)
 router.get("/retornaComentarios",retornaComentarios)
 
 export default router;

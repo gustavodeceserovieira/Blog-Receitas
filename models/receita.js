@@ -7,7 +7,7 @@ const modelReceita = new Schema({
   autor:{type:String},
   categoria:{type:String},
   dataCriacao:{type:Date},
-   comentarios: [{ type: Schema.Types.ObjectId, ref: "comentario",required:true}]
+  comentarios: [{ type: Schema.Types.ObjectId, ref: "comentario",required:true}]
 });
 
 export default model('receita', modelReceita);

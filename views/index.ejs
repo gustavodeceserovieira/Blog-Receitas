@@ -50,10 +50,8 @@
     </style>
   </head>
   <body class="bg-gradient-to-br from-orange-50 to-red-50 min-h-screen">
-    <!-- Header -->
     <header
-      class="bg-white shadow-lg border-b-4 border-orange-400 sticky top-0 z-40"
-    >
+      class="bg-white shadow-lg border-b-4 border-orange-400 sticky top-0 z-40">
       <div class="container mx-auto px-4 py-6">
         <div class="flex items-center justify-between">
           <a
@@ -80,9 +78,7 @@
         </div>
       </div>
     </header>
-
     <main>
-      <!-- Search and Filters -->
       <div class="container mx-auto px-4 py-8">
         <div class="glass-effect rounded-2xl shadow-xl p-6 mb-8">
           <form class="flex flex-col lg:flex-row gap-4">
@@ -103,12 +99,12 @@
                 name="category"
                 class="px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none bg-white"
               >
-                <option value="Todas">Todas as Categorias</option>
-                <option value="Doces">Doces</option>
-                <option value="Salgados">Salgados</option>
-                <option value="Bebidas">Bebidas</option>
-                <option value="Pratos Principais">Pratos Principais</option>
-                <option value="Lanches">Lanches</option>
+              <option value="Todas" selected>Todas</option>
+               <option value="Massas" selected>Massas</option>
+                <option value="Sobremesas">Sobremesas</option>
+                <option value="Vegano">Vegano</option>
+                <option value="Carnes">Carnes</option>
+                <option value="Saladas">Saladas</option>
               </select>
             </div>
             <button
@@ -119,7 +115,7 @@
             </button>
           </form>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="div-receita">
             <% data.forEach(function(receita) { %>
               <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover-scale">
                 <div class="relative">
@@ -127,7 +123,7 @@
                     <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold"></span>
                   </div>
                 </div>
-                <div class="p-6">
+                <div class="p-6" data-category="<%= receita.categoria %>">
                   <h3 class="text-xl font-bold text-gray-800 mb-2"><%= receita.titulo %></h3>
                   <p class="text-gray-600 mb-4 line-clamp-2">Categoria: <%= receita.categoria %></p>
                   <div class="flex items-center justify-between mb-4">
@@ -146,8 +142,6 @@
             </div>
         <% }); %>
     </main>
-
-    <!-- Footer -->
     <footer class="bg-gray-800 text-white py-8 mt-16">
       <div class="container mx-auto px-4 text-center">
         <div class="flex items-center justify-center space-x-2 mb-4">
@@ -156,48 +150,30 @@
         </div>
         <p class="text-gray-400">Compartilhando sabores e criando memórias</p>
         <p class="text-sm text-gray-500 mt-4">
-          &copy; 2024 Receitas & Sabores. Feito com ❤️
+          &copy; 2024 Receitas & Sabores.
         </p>
       </div>
     </footer>
-
     <script>
-      // Lista de receitas curtidas (simulando localStorage)
-      let likedRecipes = [2, 5]; // Pizza e Salada já estão curtidas
-
-      function toggleLike(recipeId) {
-        const likeBtn = document.getElementById(`like-btn-${recipeId}`);
-        const likesCount = document.getElementById(`likes-count-${recipeId}`);
-
-        if (likedRecipes.includes(recipeId)) {
-          // Remover curtida
-          likedRecipes = likedRecipes.filter((id) => id !== recipeId);
-          likeBtn.className =
-            "absolute top-4 right-4 p-2 rounded-full transition-all duration-300 bg-white text-gray-600 hover:bg-red-50";
-          likesCount.textContent = parseInt(likesCount.textContent) - 1;
-        } else {
-          // Adicionar curtida
-          likedRecipes.push(recipeId);
-          likeBtn.className =
-            "absolute top-4 right-4 p-2 rounded-full transition-all duration-300 bg-red-500 text-white";
-          likesCount.textContent = parseInt(likesCount.textContent) + 1;
-        }
-      }
-
-      // Funcionalidade de busca simples
       document.querySelector("form").addEventListener("submit", function (e) {
         e.preventDefault();
-        const searchTerm = document
-          .querySelector('input[name="search"]')
-          .value.toLowerCase();
-        const category = document.querySelector(
-          'select[name="category"]'
-        ).value;
-
-        if (searchTerm || category !== "Todas") {
-          alert(`Buscando por: "${searchTerm}" na categoria "${category}"`);
-        }
+        const termo = document.querySelector('input[name="search"]').value.toLowerCase();
+        const categoria = document.querySelector('select[name="category"]').value;
+        const itens = document.querySelectorAll("#div-receita .p-6");
+        itens.forEach((item) => {
+          const texto = item.textContent.toLowerCase();
+          const cat = item.getAttribute("data-category");
+          if (
+            (termo=== "" || texto.includes(termo)) &&
+            (categoria === "Todas" || cat === categoria)
+          ) {
+            item.style.display = "block";
+          } else {
+            item.style.display = "none";
+          }
+        });
       });
+</script>
     </script>
   </body>
 </html>

@@ -48,7 +48,10 @@
                     <span>Receita adicionada com sucesso!</span>
                 </div>
             </div>
-
+            <!--
+        ingredientes:req.body.ingredientes,
+        comentarios:req.body.comentarios
+            -->
             <!-- Form -->
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
                 <div class="p-6 bg-gradient-to-r from-orange-500 to-red-500 text-white">
@@ -60,17 +63,16 @@
                 </div>
                 
                 <div class="p-6 space-y-6">
-                    <form id="recipe-form">
+                    <form id="recipe-form" method="post" action="/salvaReceitas" >
                         <!-- Basic Info -->
                         <div class="grid md:grid-cols-2 gap-4 mb-6">
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">
-                                    <i class="fas fa-utensils text-orange-500 mr-1"></i>
-                                    Título da Receita *
+                                     <i class="fas fa-utensils text-orange-500 mr-1"></i> Título da Receita *
                                 </label>
                                 <input
                                     type="text"
-                                    name="title"
+                                    name="titulo"
                                     placeholder="Ex: Brigadeiro Gourmet"
                                     class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none transition-colors"
                                     required
@@ -83,22 +85,21 @@
                                 </label>
                                 <input
                                     type="text"
-                                    name="author"
+                                    name="autor"
                                     placeholder="Ex: Maria Silva"
                                     class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none transition-colors"
                                     required
                                 >
                             </div>
                         </div>
-
-                        <!-- Description -->
                         <div class="mb-6">
                             <label class="block text-sm font-semibold text-gray-700 mb-2">
                                 <i class="fas fa-align-left text-orange-500 mr-1"></i>
                                 Descrição / Instruções*
                             </label>
                             <textarea
-                                name="description"
+                                name="instrucoes"
+                                id="instrucoes"
                                 placeholder="Descreva ou dê instruções sobre a sua receita..."
                                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none h-24 transition-colors"
                                 required
@@ -107,25 +108,24 @@
                                     <i class="fas fa-tags text-orange-500 mr-1"></i>
                                     Categoria
                                 </label>
-                                <select
-                                    name="category"
+                                <select name="categoria"
                                     class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none bg-white transition-colors"
                                 >
-                                    <option value="Doces" selected>Doces</option>
-                                    <option value="Salgados">Salgados</option>
-                                    <option value="Bebidas">Bebidas</option>
-                                    <option value="Massas">Massas</option>
+                                    <option value="Todas" selected>Todas</option>
+                                    <option value="Massas" >Massas</option>
+                                    <option value="Sobremesas">Sobremesas</option>
+                                    <option value="Vegano">Vegano</option>
                                     <option value="Carnes">Carnes</option>
+                                    <option value="Saladas">Saladas</option>
                                 </select>
                             </div>
-                        <!-- Ingredients -->
                         <div class="mb-6">
                             <label class="block text-sm font-semibold text-gray-700 mb-2">
                                 <i class="fas fa-list-ul text-orange-500 mr-1"></i>
                                 Ingredientes *
                             </label>
                             <div id="ingredients-container" class="space-y-2">
-                                <input type="text" name="ingredients" placeholder="Ex: 1 xícara de farinha de trigo" class="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none transition-colors"
+                                <input type="text" name="ingredientes[]" placeholder="Ex: 1 xícara de farinha de trigo" class="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none transition-colors"
                                     required >
                             </div>
                             <button
@@ -144,7 +144,7 @@
                             >
                                 <i class="fas fa-paper-plane"></i>
                                 <span>Publicar Receita</span>
-                            </button>
+                        </button>
                         </div>
                     </form>
                 </div>
@@ -166,35 +166,15 @@
     <script>
         // Add new ingredient field
         function addIngredient() {
-            let ingredientes = []
             const container = document.getElementById('ingredients-container');
             const newInput = document.createElement('input');
             newInput.type = 'text';
-            newInput.name = 'ingredients';
+            newInput.name = 'ingredientes';
             newInput.placeholder = 'Ingrediente adicional';
             newInput.className = 'w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none transition-colors';
             container.appendChild(newInput);
-            ingredientes.push(newInput.value)
         }
         // Handle form submission
-        document.getElementById('recipe-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Show success message
-            const successMessage = document.getElementById('success-message');
-            successMessage.classList.remove('hidden');
-            
-            // Scroll to top to show message
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            // Hide message after 5 seconds
-            setTimeout(() => {
-                successMessage.classList.add('hidden');
-            }, 5000);
-            
-            // Optional: Reset form or redirect
-            // this.reset();
-        });
     </script>
 </body>
 </html>

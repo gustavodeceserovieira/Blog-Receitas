@@ -33,27 +33,20 @@
                         <i class="fas fa-arrow-left"></i>
                         <span>Voltar</span>
                     </a>
-                    <a href="/add-recipe" class="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-3 rounded-full font-semibold flex items-center space-x-2 shadow-lg transition-all duration-300 hover:scale-105">
-                        <i class="fas fa-plus"></i>
-                        <span>Nova Receita</span>
-                    </a>
                 </div>
             </div>
         </div>
     </header>
 
     <main class="container mx-auto px-4 py-8">
-        <!-- Success Message -->
         <div id="success-message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl mb-6 hidden">
             <div class="flex items-center">
                 <i class="fas fa-check-circle mr-2"></i>
                 <span>Comentário adicionado com sucesso!</span>
             </div>
         </div>
-            <!-- Recipe Content -->
             <div class="lg:col-span-2">
                 <div class="grid md:grid-cols-2 gap-6">
-                    <!-- Ingredients -->
                     <div class="bg-white rounded-2xl shadow-xl p-6">
                         <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">Ingredientes</h3>
                             <ul class="space-y-3">
@@ -64,7 +57,6 @@
                                  <% }); %>
                             </ul>
                     </div>
-                    <!-- Instructions -->
                     <div class="bg-white rounded-2xl shadow-xl p-6">
                         <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">Instruções ou modo de preparo</h3>
                         <ol class="space-y-4">
@@ -78,18 +70,14 @@
                 </div>
             </div>
         </div>
-
-        <!-- Comments Section -->
         <div class="bg-white rounded-2xl shadow-xl p-6 mb-8">
             <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
                 <i class="fas fa-comments text-orange-500 mr-3"></i>
                 Comentários
             </h3>
-
-            <!-- Add Comment Form -->
             <div class="bg-gray-50 rounded-xl p-6 mb-6">
                 <h4 class="text-lg font-semibold text-gray-800 mb-4">Deixe seu comentário</h4>
-                <form id="comment-form" class="space-y-4">
+                <form id="comment-form" class="space-y-4" method="post" action="/salvaComentarios/<%= id %>" >
                     <div class="grid md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-2">
@@ -98,7 +86,7 @@
                             </label>
                             <input
                                 type="text"
-                                id="comment-author"
+                                name="autor"
                                 placeholder="Digite seu nome"
                                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none transition-colors"
                                 required
@@ -112,6 +100,7 @@
                         </label>
                         <textarea
                             id="comment-text"
+                            name="texto"
                             placeholder="Compartilhe sua experiência com esta receita..."
                             class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none h-24 transition-colors"
                             required
@@ -128,84 +117,23 @@
                     </div>
                 </form>
             </div>
-
-            <!--
-            <div id="comments-list" class="space-y-4">
-                <div class="bg-gray-50 rounded-xl p-4 border-l-4 border-orange-400">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center">
-                                <i class="fas fa-user text-white"></i>
-                            </div>
-                            <div>
-                                <h5 class="font-semibold text-gray-800">Maria Silva</h5>
-                                <div class="flex items-center space-x-2">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                    <span class="text-sm text-gray-500">5.0</span>
+            <% data1.forEach(function(comentarios) { %>
+                <div id="comments-list" class="space-y-4">
+                    <div class="bg-gray-50 rounded-xl p-4 border-l-4 border-orange-400">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user text-white"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-gray-800"><%= comentarios.autor %></h5>
                                 </div>
                             </div>
+                            <span class="text-sm text-gray-500"><%= comentarios.dataCriacao.toLocaleDateString("pt-br",{hour:"2-digit",minute:"2-digit"}) %></span>
                         </div>
-                        <span class="text-sm text-gray-500">2 dias atrás</span>
+                        <p class="text-gray-700"><%= comentarios.texto %></p>
                     </div>
-                    <p class="text-gray-700">Receita perfeita! Fiz exatamente como descrito e ficou delicioso. Minha família adorou, principalmente as crianças. Já virou tradição aqui em casa!</p>
-                </div>
-                <div class="bg-gray-50 rounded-xl p-4 border-l-4 border-orange-400">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full flex items-center justify-center">
-                                <i class="fas fa-user text-white"></i>
-                            </div>
-                            <div>
-                                <h5 class="font-semibold text-gray-800">João Santos</h5>
-                                <div class="flex items-center space-x-2">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                    </div>
-                                    <span class="text-sm text-gray-500">4.0</span>
-                                </div>
-                            </div>
-                        </div>
-                        <span class="text-sm text-gray-500">1 semana atrás</span>
-                    </div>
-                    <p class="text-gray-700">Boa receita! Ficou bem cremoso e saboroso. Uma dica: deixei no fogo um pouco mais para ficar no ponto ideal. Recomendo!</p>
-                </div>
-                <div class="bg-gray-50 rounded-xl p-4 border-l-4 border-orange-400">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full flex items-center justify-center">
-                                <i class="fas fa-user text-white"></i>
-                            </div>
-                            <div>
-                                <h5 class="font-semibold text-gray-800">Carla Oliveira</h5>
-                                <div class="flex items-center space-x-2">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                    <span class="text-sm text-gray-500">5.0</span>
-                                </div>
-                            </div>
-                        </div>
-                        <span class="text-sm text-gray-500">2 semanas atrás</span>
-                    </div>
-                    <p class="text-gray-700">Maravilhoso! Fiz para o aniversário da minha filha e foi um sucesso. Todo mundo pediu a receita. Obrigada por compartilhar!</p>
-                </div>
-            </div>
-        </div>
-    -->
+                <% }); %>
     </main>
 
     <!-- Footer -->
