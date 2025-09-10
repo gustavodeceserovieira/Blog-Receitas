@@ -7,17 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .gradient-text {
-            background: linear-gradient(135deg, #f97316, #dc2626);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/css/detalhes.css"/>
 </head>
 <body class="bg-gradient-to-br from-orange-50 to-red-50 min-h-screen">
-    <!-- Header -->
     <header class="bg-white shadow-lg border-b-4 border-orange-400">
         <div class="container mx-auto px-4 py-6">
             <div class="flex items-center justify-between">
@@ -25,7 +17,7 @@
                     <i class="fas fa-utensils text-4xl text-orange-500"></i>
                     <div>
                         <h1 class="text-3xl font-bold gradient-text">Receitas & Sabores</h1>
-                        <p class="text-gray-600">Compartilhe e descubra receitas incríveis</p>
+                        <p class="text-gray-600">Compartilhe e descubra receitas</p>
                     </div>
                 </a>
                 <div class="flex items-center space-x-4">
@@ -37,7 +29,6 @@
             </div>
         </div>
     </header>
-
     <main class="container mx-auto px-4 py-8">
         <div id="success-message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl mb-6 hidden">
             <div class="flex items-center">
@@ -49,13 +40,13 @@
                 <div class="grid md:grid-cols-2 gap-6">
                     <div class="bg-white rounded-2xl shadow-xl p-6">
                         <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">Ingredientes</h3>
-                            <ul class="space-y-3">
-                                <% data.forEach(function(receita) { %>
+                        <ul class="space-y-3">
+                            <% data.forEach(function(receita) { %>
                                 <div class="flex items-start space-x-3">
                                     <li class="text-gray-700"><%- receita.ingredientes.map(item => item.trim()).join("<br>")  %></li>
                                 </div>
-                                 <% }); %>
-                            </ul>
+                            <% }); %>
+                        </ul>
                     </div>
                     <div class="bg-white rounded-2xl shadow-xl p-6">
                         <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">Instruções ou modo de preparo</h3>
@@ -64,7 +55,7 @@
                                 <div class="flex items-start space-x-3">
                                     <li class="text-gray-700"><%- receita.instrucoes.split(',').map(item => item.trim()).join("<br>")  %></li>
                                 </div>
-                             <% }); %>
+                            <% }); %>
                         </ol>
                     </div>
                 </div>
@@ -84,13 +75,7 @@
                                 <i class="fas fa-user text-orange-500 mr-1"></i>
                                 Seu Nome *
                             </label>
-                            <input
-                                type="text"
-                                name="autor"
-                                placeholder="Digite seu nome"
-                                class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none transition-colors"
-                                required
-                            >
+                            <input type="text" name="autor" placeholder="Digite seu nome" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none transition-colors" required>
                         </div>
                     </div>
                     <div>
@@ -133,136 +118,19 @@
                         </div>
                         <p class="text-gray-700"><%= comentarios.texto %></p>
                     </div>
-                <% }); %>
+                </div>
+                <br>
+            <% }); %>
+        </div>
     </main>
-
-    <!-- Footer -->
     <footer class="bg-gray-800 text-white py-8 mt-16">
         <div class="container mx-auto px-4 text-center">
             <div class="flex items-center justify-center space-x-2 mb-4">
                 <i class="fas fa-utensils text-2xl text-orange-500"></i>
                 <h3 class="text-xl font-bold">Receitas & Sabores</h3>
             </div>
-            <p class="text-gray-400">Compartilhando sabores e criando memórias</p>
-            <p class="text-sm text-gray-500 mt-4">&copy; 2024 Receitas & Sabores. Feito com ❤️</p>
+            <p class="text-sm text-gray-500 mt-4">&copy; 2024 Receitas & Sabores</p>
         </div>
     </footer>
-
-    <script>
-                // Star rating functionality
-        let selectedRating = 0;
-        const stars = document.querySelectorAll('.star-rating');
-        const ratingInput = document.getElementById('rating-value');
-
-        stars.forEach((star, index) => {
-            star.addEventListener('click', () => {
-                selectedRating = index + 1;
-                ratingInput.value = selectedRating;
-                updateStars();
-            });
-
-            star.addEventListener('mouseenter', () => {
-                highlightStars(index + 1);
-            });
-        });
-
-        document.querySelector('.flex.space-x-1').addEventListener('mouseleave', () => {
-            updateStars();
-        });
-
-        function highlightStars(rating) {
-            stars.forEach((star, index) => {
-                if (index < rating) {
-                    star.classList.remove('text-gray-300');
-                    star.classList.add('text-yellow-400');
-                } else {
-                    star.classList.remove('text-yellow-400');
-                    star.classList.add('text-gray-300');
-                }
-            });
-        }
-
-        function updateStars() {
-            highlightStars(selectedRating);
-        }
-
-        // Comment form submission
-        const commentForm = document.getElementById('comment-form');
-        const commentsList = document.getElementById('comments-list');
-        const commentsCount = document.getElementById('comments-count');
-        const successMessage = document.getElementById('success-message');
-
-        commentForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const author = document.getElementById('comment-author').value;
-            const text = document.getElementById('comment-text').value;
-            const rating = selectedRating;
-            
-            if (!author || !text) {
-                alert('Por favor, preencha todos os campos obrigatórios.');
-                return;
-            }
-
-            // Create new comment element
-            const newComment = document.createElement('div');
-            newComment.className = 'bg-gray-50 rounded-xl p-4 border-l-4 border-orange-400';
-            
-            // Generate random avatar color
-            const colors = [
-                'from-purple-400 to-pink-400',
-                'from-blue-400 to-cyan-400',
-                'from-green-400 to-emerald-400',
-                'from-yellow-400 to-orange-400',
-                'from-red-400 to-pink-400'
-            ];
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
-            
-            // Generate stars display
-            let starsHtml = '';
-            for (let i = 1; i <= 5; i++) {
-            if (i <= rating) {
-                starsHtml += '<i class="fas fa-star"></i>';
-            } else {
-                starsHtml += '<i class="far fa-star"></i>';
-            }
-        }
-
-        newComment.innerHTML = `
-            <div class="flex items-start justify-between mb-3">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gradient-to-r ${randomColor} rounded-full flex items-center justify-center">
-                        <i class="fas fa-user text-white"></i>
-                    </div>
-                    <div>
-                        <h5 class="font-semibold text-gray-800">${author}</h5>
-                        <div class="flex items-center space-x-2">
-                            <div class="flex text-yellow-400">
-                                ${starsHtml}
-                            </div>
-                            <span class="text-sm text-gray-500">${rating.toFixed(1)}</span>
-                        </div>
-                    </div>
-                </div>
-                <span class="text-sm text-gray-500">Agora mesmo</span>
-            </div>
-            <p class="text-gray-700">${text}</p>
-        `;
-
-        // Adicionar na lista
-        commentsList.prepend(newComment);
-
-        // Atualizar contador
-        commentsCount.textContent = parseInt(commentsCount.textContent) + 1;
-
-        // Mostrar mensagem de sucesso
-        successMessage.classList.remove('hidden');
-        setTimeout(() => {
-            successMessage.classList.add('hidden');
-        }, 3000);
-
-        // Resetar formulário
-        commentForm.reset();
-        selectedRating = 0;
-        updateStars();
-});
+</body>
+</html>

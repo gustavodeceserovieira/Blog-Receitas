@@ -4,74 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Receitas & Sabores - Blog Colaborativo</title>
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ["Inter", "sans-serif"],
-            },
-          },
-        },
-      };
-    </script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <style>
-      .line-clamp-2 {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-      .hover-scale {
-        transition: transform 0.3s ease;
-      }
-      .hover-scale:hover {
-        transform: translateY(-8px);
-      }
-      .gradient-text {
-        background: linear-gradient(135deg, #f97316, #dc2626);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-      .glass-effect {
-        backdrop-filter: blur(10px);
-        background-color: rgba(255, 255, 255, 0.9);
-      }
-    </style>
+    <script src="/js/index.js" defer></script>
   </head>
   <body class="bg-gradient-to-br from-orange-50 to-red-50 min-h-screen">
     <header
       class="bg-white shadow-lg border-b-4 border-orange-400 sticky top-0 z-40">
       <div class="container mx-auto px-4 py-6">
         <div class="flex items-center justify-between">
-          <a
-            href="/"
-            class="flex items-center space-x-3 hover:opacity-80 transition-opacity"
-          >
+          <a href="/" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
             <i class="fas fa-utensils text-4xl text-orange-500"></i>
             <div>
-              <h1 class="text-3xl font-bold gradient-text">
-                Receitas & Sabores
-              </h1>
-              <p class="text-gray-600">
-                Compartilhe e descubra receitas incríveis
-              </p>
+              <h1 class="text-3xl font-bold gradient-text">Receitas & Sabores</h1>
+              <p class="text-gray-600">Compartilhe e descubra receitas</p>
             </div>
           </a>
-          <a
-            href="/adicionaReceita"
-            class="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-3 rounded-full font-semibold flex items-center space-x-2 shadow-lg transition-all duration-300 hover:scale-105"
-          >
+          <a href="/adicionaReceita" class="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-3 rounded-full font-semibold flex items-center space-x-2 shadow-lg transition-all duration-300 hover:scale-105">
             <i class="fas fa-plus"></i>
             <span>Nova Receita</span>
           </a>
@@ -83,34 +34,21 @@
         <div class="glass-effect rounded-2xl shadow-xl p-6 mb-8">
           <form class="flex flex-col lg:flex-row gap-4">
             <div class="flex-1 relative">
-              <i
-                class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
-              ></i>
-              <input
-                type="text"
-                name="search"
-                placeholder="Pesquisar receitas..."
-                class="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none transition-colors"
-              />
+              <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              <input type="text" name="search" placeholder="Pesquisar receitas..." class="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none transition-colors"/>
             </div>
             <div class="flex items-center space-x-2">
               <i class="fas fa-filter text-gray-500"></i>
-              <select
-                name="category"
-                class="px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none bg-white"
-              >
-              <option value="Todas" selected>Todas</option>
-               <option value="Massas" selected>Massas</option>
+              <select name="category" class="px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none bg-white">
+                <option value="Todas"selected>Todas</option>
+                <option value="Massas">Massas</option>
                 <option value="Sobremesas">Sobremesas</option>
                 <option value="Vegano">Vegano</option>
                 <option value="Carnes">Carnes</option>
                 <option value="Saladas">Saladas</option>
               </select>
             </div>
-            <button
-              type="submit"
-              class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-xl hover:from-orange-600 hover:to-red-600 transition-all duration-300 font-semibold"
-            >
+            <button type="submit" class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-xl hover:from-orange-600 hover:to-red-600 transition-all duration-300 font-semibold">
               <i class="fas fa-search mr-2"></i>Buscar
             </button>
           </form>
@@ -134,13 +72,15 @@
                         <a
                           href="/detalhes/<%= receita.id %>"
                           class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-lg hover:from-orange-600 hover:to-red-600 transition-all duration-300 font-semibold"> Ver Receita
-                      </a>
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-        <% }); %>
+          <% }); %>
+        </div>
+      </div>
     </main>
     <footer class="bg-gray-800 text-white py-8 mt-16">
       <div class="container mx-auto px-4 text-center">
@@ -148,32 +88,19 @@
           <i class="fas fa-utensils text-2xl text-orange-500"></i>
           <h3 class="text-xl font-bold">Receitas & Sabores</h3>
         </div>
-        <p class="text-gray-400">Compartilhando sabores e criando memórias</p>
-        <p class="text-sm text-gray-500 mt-4">
-          &copy; 2024 Receitas & Sabores.
-        </p>
+        <p class="text-sm text-gray-500 mt-4">&copy; 2024 Receitas & Sabores.</p>
       </div>
     </footer>
     <script>
-      document.querySelector("form").addEventListener("submit", function (e) {
-        e.preventDefault();
-        const termo = document.querySelector('input[name="search"]').value.toLowerCase();
-        const categoria = document.querySelector('select[name="category"]').value;
-        const itens = document.querySelectorAll("#div-receita .p-6");
-        itens.forEach((item) => {
-          const texto = item.textContent.toLowerCase();
-          const cat = item.getAttribute("data-category");
-          if (
-            (termo=== "" || texto.includes(termo)) &&
-            (categoria === "Todas" || cat === categoria)
-          ) {
-            item.style.display = "block";
-          } else {
-            item.style.display = "none";
-          }
-        });
-      });
-</script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
     </script>
   </body>
 </html>
