@@ -1,5 +1,5 @@
 import express from 'express'
-import salvaReceita, { retornaReceitas, RetornaReceitasID } from '../controllers/receitaController.js';
+import salvaReceita, { RetornaReceitasID } from '../controllers/receitaController.js';
 import { formAdicionaReceita } from '../controllers/receitaController.js';
 
 const router = express.Router()
