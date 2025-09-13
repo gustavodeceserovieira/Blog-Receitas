@@ -54,33 +54,44 @@
           </form>
         </div>
         <div id="div-receita" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
-            <% data.forEach(function(receita) { %>
-              <div data-category="<%= receita.categoria %>" class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover-scale card" >
-                <div class="relative">
-                  <div class="absolute bottom-4 left-4">
-                    <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold"></span>
-                  </div>
+          <% data.data.forEach(function(receita) { %>
+            <div data-category="<%= receita.categoria %>" class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover-scale card" >
+              <div class="relative">
+                <div class="absolute bottom-4 left-4">
+                  <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold"></span>
                 </div>
-                <div class="p-6">
-                  <h3 id="titulo" class="text-xl font-bold text-gray-800 mb-2"><%= receita.titulo %></h3>
-                  <p class="text-gray-600 mb-4 line-clamp-2">Categoria: <%= receita.categoria %></p>
-                  <p class="text-gray-600 mb-4 line-clamp-2">Ingrediente principal: <%= receita.ingredientes[0] %></p>
-                  <div class="flex items-center justify-between mb-4">
-                  <div class="flex items-center justify-between">
-                    <span class="text-sm text-gray-500" ><span class="font-semibold">Autor: <%= receita.autor %></span>
-                    <div class="flex items-center space-x-3">
-                        <span>Data publicação: <%= receita.dataCriacao.toLocaleDateString("pt-br") %></span>
-                        <a
-                          href="/detalhes/<%= receita.id %>"
-                          class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-lg hover:from-orange-600 hover:to-red-600 transition-all duration-300 font-semibold"> Ver Receita
-                        </a>
-                      </div>
+              </div>
+              <div class="p-6">
+                <h3 id="titulo" class="text-xl font-bold text-gray-800 mb-2"><%= receita.titulo %></h3>
+                <p class="text-gray-600 mb-4 line-clamp-2">Categoria: <%= receita.categoria %></p>
+                <p class="text-gray-600 mb-4 line-clamp-2">Ingrediente principal: <%= receita.ingredientes[0] %></p>
+                <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-gray-500" ><span class="font-semibold">Autor: <%= receita.autor %></span>
+                  <div class="flex items-center space-x-3">
+                      <span>Data publicação: <%= receita.dataCriacao.toLocaleDateString("pt-br") %></span>
+                      <a
+                        href="/detalhes/<%= receita.id %>"
+                        class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-lg hover:from-orange-600 hover:to-red-600 transition-all duration-300 font-semibold"> Ver Receita
+                      </a>
                     </div>
                   </div>
                 </div>
               </div>
-          <% }); %>
-        </div>
+            </div>
+        <% }); %>
+      </div>
+      <!-- paginação -->
+      <div class="flex justify-center items-center gap-4 mt-8">
+        <% if (data.page > 1) { %>
+          <a href="/?page=<%= data.page - 1 %>" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">Anterior</a>
+        <% } %>
+
+        <span>Página <%= data.page %> de <%= data.totalPages %></span>
+
+        <% if (data.page < data.totalPages) { %>
+          <a href="/?page=<%= data.page + 1 %>" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">Próxima</a>
+        <% } %>
       </div>
     </main>
     <footer class="bg-gray-800 text-white py-8 mt-16">

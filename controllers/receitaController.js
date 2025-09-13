@@ -13,12 +13,24 @@ export default async function salvaReceita(req,res){
         comentarios:req.body.comentarios
         });
 
-        await receita.save()
+    await receita.save()
     return res.redirect("/")
 }
 
-export async function retornaReceitas(req,res) {
-    return await modelReceita.find({})
+// retorna receitas paginadas
+export async function retornaReceitas(page = 1, limit = 6) {
+  const skip = (page - 1) * limit;
+
+  const receitas = await modelReceita.find({}).skip(skip).limit(limit);
+
+  const total = await modelReceita.countDocuments();
+
+  return {
+    page,
+    totalPages: Math.ceil(total / limit),
+    totalItems: total,
+    data: receitas,
+  };
 }
 
 export async function RetornaReceitasID(req,res) {
